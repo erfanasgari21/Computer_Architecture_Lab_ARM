@@ -3,5 +3,5 @@ module WB_Stage(
     input [31:0] pcIn,
     output [31:0] pc
 );
-
+    assign pc = pcIn;
 endmodule
