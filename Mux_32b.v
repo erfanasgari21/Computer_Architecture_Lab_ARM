@@ -1,6 +1,6 @@
 module Mux_32b(
     input branchTaken, 
-    input[31:0] branchAddress, pcIn
+    input[31:0] pcIn, branchAddress,
     output[31:0] pcOut
     );
 
