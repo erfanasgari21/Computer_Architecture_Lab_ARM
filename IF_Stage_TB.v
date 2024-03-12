@@ -1,7 +1,8 @@
 `timescale 1ns/1ns
 module IF_Stage_TB();
     reg clk, rst, freeze, branchTaken;
-    reg[31:0] branchAddress, pc, instruction;
+    reg[31:0] branchAddress;
+    wire[31:0] pc, instruction;
     
 
     IF_Stage CUT(clk, rst, freeze, branchTaken, branchAddress, pc, instruction);
@@ -9,9 +10,10 @@ module IF_Stage_TB();
         clk = 0;
         rst = 1;
         #100 rst = 0;
-
+        freeze = 0;
+        branchTaken = 0;
+        branchAddress = 32'b0;
         #1000
-
         $stop;
     end
     always begin

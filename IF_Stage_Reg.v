@@ -3,7 +3,7 @@ module IF_Stage_Reg(
     input[31:0] pcIn, instructionIn,
     output reg[31:0] pc, instruction
 );
-    always @(posedge clk, posedge rst) begin
+    always @(posedge clk or posedge rst) begin
         if(rst) begin
             pc = 32'b0;
             instruction = 32'b0;
