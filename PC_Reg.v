@@ -4,7 +4,7 @@ module PC_Reg(
     output reg[31:0] pcOut
     );
 
-    always @(posedge clk, posedge rst)
+    always @(posedge clk or posedge rst)
     begin
         if(rst==1'b1)
             pcOut = 32'b0;
