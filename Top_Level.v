@@ -8,7 +8,7 @@ module Top_Level(
     ID_Stage        ID(clk, rst, pc_IF_Reg, pc_ID);
     ID_Stage_Reg    ID_Reg(clk, rst, pc_ID, pc_ID_Reg);
     EXE_Stage       EXE(clk, rst, pc_ID_Reg, pc_EXE);
-    EXE_Stage_Reg   EXE_Reg(clk, rst, pc_EXE, inst_pc_EXE_Reg);
+    EXE_Stage_Reg   EXE_Reg(clk, rst, pc_EXE, pc_EXE_Reg);
     MEM_Stage       MEM(clk, rst, pc_EXE_Reg, pc_MEM);
     MEM_Stage_Reg   MEM_Reg(clk, rst, pc_MEM, pc_MEM_Reg);
     WB_Stage        WB(clk, rst, pc_MEM_Reg, pc_WB);
