@@ -1,7 +1,7 @@
 module Top_Level(
     input clk, rst
 );
-    wire [31:0] pc_IF, pc_IF_Reg, pc_ID, pc_ID_reg, pc_EXE, pc_EXE_Reg, pc_MEM, pc_MEM_Reg, pc_WB, pc_WB_Reg;
+    wire [31:0] pc_IF, pc_IF_Reg, pc_ID, pc_ID_Reg, pc_EXE, pc_EXE_Reg, pc_MEM, pc_MEM_Reg, pc_WB, pc_WB_Reg;
     wire [31:0] inst_IF, inst_IF_Reg;
     IF_Stage        IF(clk, rst, 1'b0, 1'b0, 32'b0, pc_IF, inst_IF);
     IF_Stage_Reg    IF_Reg(clk, rst, 1'b0, 1'b0, pc_IF, inst_IF, pc_IF_Reg, inst_IF_Reg);
@@ -14,3 +14,4 @@ module Top_Level(
     WB_Stage        WB(clk, rst, pc_MEM_Reg, pc_WB);
     WB_Stage_Reg    WB_Reg(clk, rst, pc_WB, pc_WB_Reg);
 endmodule
+
