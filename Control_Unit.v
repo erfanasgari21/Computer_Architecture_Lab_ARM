@@ -2,11 +2,13 @@ module Control_Unit(
     input[1:0] mode,
     input[3:0] opCode,
     input sIn,
-    output reg[3:0] exeCmd,
-    output reg memRead, memWrite, writeBackEn, b, sOut
+    output[8:0] controlOut
 );
+    reg[3:0] exeCmd;
+    reg memReadEn, memWriteEn, writeBackEn, b, sOut;
+
     always @(mode or opCode or sIn) begin
-        {exeCmd, memRead, memWrite, writeBackEn, b, sOut} = 9'b0;
+        {exeCmd, memReadEn, memWriteEn, writeBackEn, b, sOut} = 9'b0;
         case(mode)
             2'b00: begin
                 sOut <= sIn;
@@ -29,8 +31,8 @@ module Control_Unit(
                 exeCmd <= 4'b0010;
                 sOut <= 1'b1;
                 case(sIn)
-                    1'b1: {memRead, writeBackEn} <= {1'b1, 1'b1}; //LDR
-                    1'b0: memWrite <= 1'b1;                       //STR
+                    1'b1: {memReadEn, writeBackEn} <= {1'b1, 1'b1}; //LDR
+                    1'b0: memWriteEn <= 1'b1;                       //STR
                 endcase
             end
             
@@ -39,5 +41,5 @@ module Control_Unit(
 
         endcase
     end        
-
+    assign controlOut = {exeCmd, memReadEn, memWriteEn, writeBackEn, b, sOut};
 endmodule
