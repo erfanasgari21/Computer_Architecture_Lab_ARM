@@ -17,7 +17,7 @@ module ID_Stage_Reg(
     output reg[3:0] dest
 );
     always @(posedge clk or posedge rst) begin
-        if(rst) begin
+        if(rst or flush) begin
             {writeBackEn, memReadEn, memWriteEn, b, s, imm} <= 6'b0;
             {exeCmd, dest} <= 8'b0;
             shiftOperand <= 12'b0;
