@@ -5,7 +5,7 @@ module Val_Generator(
     output [31:0] valOut,
 );
 
-    always@(valRm, imm, shiftOperand, signedImm24)
+    always@(valRm, imm, shiftOperand)
     begin
         valOut = 32'b0;
         if(isMem) begin
