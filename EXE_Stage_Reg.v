@@ -11,17 +11,13 @@ module EXE_Stage_Reg(
     always @(posedge clk or posedge rst) begin
         if(rst) begin
             {writeBackEn, memReadEn, memWriteEn} <= 3'b0;
-            {exeCmd, dest, statusReg} <= 12'b0;
-            shiftOperand <= 12'b0;
-            signedImm24 <= 24'b0;
-            {pc, valRn, valRm} <= 96'b0;
+            {resultALU, storeVal} <= 64'b0;
+            dest <= 4'b0;
         end
         else begin
-            {writeBackEn, memReadEn, memWriteEn, b, s, imm} <= {writeBackEnIn, memReadEnIn, memWriteEnIn, bIn, sIn, immIn};
-            {exeCmd, dest, statusReg} <= {exeCmdIn, destIn, statusRegIn};
-            shiftOperand <= shiftOperandIn;
-            signedImm24 <= signedImm24In;
-            {pc, valRn, valRm} <= {pcIn, valRnIn, valRmIn};
+            {writeBackEn, memReadEn, memWriteEn} <= {writeBackEnIn, memReadEnIn, memWriteEnIn};
+            {resultALU, storeVal} <= {resultALUIn, storeValIn};
+            dest <= destIn;
         end
     end
 endmodule
