@@ -1,8 +1,10 @@
 module WB_Stage(
     input clk, rst,
-    input [31:0] dst, memOut, aluOut,
-    output [31:0] pc,
+    input [31:0] dstIn, memResult, aluResult,
+    input memReadEn, wbEnIn
+    output [31:0] wbDst, wbValue, wbEn
 );
-    
-    assign pc = pcIn;
+    assign wbDst = dstIn;
+    assign wbEn = wbEnIn;
+    assign wbValue = memReadEn ? memResult : aluResult;
 endmodule
