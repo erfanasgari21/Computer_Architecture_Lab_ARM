@@ -2,7 +2,7 @@ module ALU(
     input [31:0] in1, in2, c,
     input [3:0] aluCmd,
     output reg [31:0] resultALU,
-    output [3:0] statusBits,
+    output [3:0] statusBits
 );
     reg V, C;
     wire N, Z;

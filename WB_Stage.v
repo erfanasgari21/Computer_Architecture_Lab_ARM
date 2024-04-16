@@ -1,7 +1,7 @@
 module WB_Stage(
     input clk, rst,
     input [31:0] dstIn, memResult, aluResult,
-    input memReadEn, wbEnIn
+    input memReadEn, wbEnIn,
     output [31:0] wbDst, wbValue,
     output wbEn
 );

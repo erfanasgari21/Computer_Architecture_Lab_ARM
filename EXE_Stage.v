@@ -8,16 +8,21 @@ module EXE_Stage(
     input imm,
     input[11:0] shiftOperand,
     input[23:0] signedImm24,
-    input[3:0] statusReg_ID,
+    input[3:0] statusRegID,
 
     //to MEM stage
     output [31:0]resultALU, branchAddress,
     //to Status register
-    output [3:0] statusReg_EXE
+    output [3:0] statusRegEXE
 );
     wire[31:0] val1, val2;
-    assign val1 = valRn;
+    wire C, isMem;
 
-    Val_Generator val_generator(valRm, imm, shiftOperand, signedImm24, val2);
+    assign val1 = valRn;
+    assign C = statusRegID[3];
+    assign isMem = memReadEn || memWriteEn;
+
+    Val_Generator val_generator(valRm, imm, isMem, shiftOperand, val2);
     Branch_Adder branch_adder(pc, signedImm24, branchAddress);
+    ALU alu(val1, val2, C, exeCmd, resultALU, statusRegEXE);
 endmodule
