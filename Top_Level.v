@@ -21,11 +21,12 @@ module Top_Level(
     wire[11:0] shiftOperand_ID_Reg;
     wire[23:0] signedImm24_ID_Reg;
     wire[3:0] dest_ID_Reg;
+    wire[3:0] statusReg_ID_Reg;
 
     IF_Stage        IF(clk, rst, 1'b0, 1'b0, 32'b0, pc_IF, inst_IF);
     IF_Stage_Reg    IF_Reg(clk, rst, 1'b0, 1'b0, pc_IF, inst_IF, pc_IF_Reg, inst_IF_Reg);
     ID_Stage        ID(clk, rst, inst_IF_Reg, 32'b0, 4'b0, 1'b0, 1'b0, 4'b0,  valRn_ID, valRm_ID, signedImm24_ID, shiftOperand_ID,exeCmd_ID, destID_ID, imm_ID, writeBackEnID_ID, memReadEn_ID, memWriteEn_ID, b_ID, s_ID, src1_ID, src2_ID,  twoSrc_ID);
-    ID_Stage_Reg    ID_Reg(clk, rst, 1'b0, writeBackEnID_ID, memReadEn_ID, memWriteEn_ID, b_ID, s_ID, exeCmd_ID, pc_IF_Reg, valRn_ID, valRm_ID, imm_ID, shiftOperand_ID, signedImm24_ID, destID_ID, writeBackEn_ID_Reg, memReadEn_ID_Reg, memWriteEn_ID_Reg, b_ID_Reg, s_ID_Reg, exeCmd_ID_Reg, pc_ID_Reg, valRn_ID_Reg, valRm_ID_Reg, imm_ID_Reg, shiftOperand_ID_Reg, signedImm24_ID_Reg, dest_ID_Reg);
+    ID_Stage_Reg    ID_Reg(clk, rst, 1'b0, writeBackEnID_ID, memReadEn_ID, memWriteEn_ID, b_ID, s_ID, exeCmd_ID, pc_IF_Reg, valRn_ID, valRm_ID, imm_ID, shiftOperand_ID, signedImm24_ID, destID_ID, 4'b0, writeBackEn_ID_Reg, memReadEn_ID_Reg, memWriteEn_ID_Reg, b_ID_Reg, s_ID_Reg, exeCmd_ID_Reg, pc_ID_Reg, valRn_ID_Reg, valRm_ID_Reg, imm_ID_Reg, shiftOperand_ID_Reg, signedImm24_ID_Reg, dest_ID_Reg, statusReg_ID_Reg);
     // EXE_Stage       EXE(clk, rst, pc_ID_Reg, pc_EXE);
     // EXE_Stage_Reg   EXE_Reg(clk, rst, pc_EXE, pc_EXE_Reg);
     // MEM_Stage       MEM(clk, rst, pc_EXE_Reg, pc_MEM);

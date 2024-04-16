@@ -29,6 +29,7 @@ module ID_Stage(
     assign imm = instruction[25];
     assign src1 = instruction[19:16];
     assign twoSrc = ~imm || memWriteEn;
+    
     Mux_4b mux_4b(memWriteEn, instruction[3:0], destID, src2);
     Register_File register_file(clk, rst, src1, src2, destWB, resultWB, writeBackEnWB, valRn, valRm);
     Control_Unit control_unit(instruction[27:26], instruction[24:21], instruction[20], controlOut);
