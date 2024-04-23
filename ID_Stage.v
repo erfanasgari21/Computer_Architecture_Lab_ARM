@@ -10,7 +10,7 @@ module ID_Stage(
     input hazard,
     //from Status register 
     input[3:0] statusReg,
-    
+            
     //to ID stage register
     output[31:0] valRn, valRm,
     output[23:0] signedImm24,
