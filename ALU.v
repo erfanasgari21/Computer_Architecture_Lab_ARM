@@ -1,5 +1,6 @@
 module ALU(
-    input [31:0] in1, in2, c,
+    input [31:0] in1, in2,
+    input c,
     input [3:0] aluCmd,
     output reg [31:0] resultALU,
     output [3:0] statusBits
@@ -10,7 +11,7 @@ module ALU(
     always @(aluCmd, in1, in2, c) begin
         {V, C, resultALU} = 34'b0;
         case(aluCmd)
-            4'b0001: resultALU = in1;
+            4'b0001: resultALU = in2;
             4'b1001: resultALU = ~in1;
             4'b0010: begin
                 {C, resultALU} = in1 + in2;
