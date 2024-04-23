@@ -1,8 +1,11 @@
 module Top_Level(
     input clk, rst
 );
-    wire [31:0] pc_IF, pc_IF_Reg, pc_EXE, pc_EXE_Reg, pc_MEM, pc_MEM_Reg, pc_WB, pc_WB_Reg;
-    wire [31:0] inst_IF, inst_IF_Reg;
+    // IF Stage
+    wire [31:0] pc_IF, inst_IF;
+
+    //IF Stage Reg
+    wire[31:0]  pc_IF_Reg, inst_IF_Reg;
 
     // ID Stage
     wire [31:0] valRn_ID, valRm_ID;
