@@ -1,4 +1,5 @@
 module Status_Reg(
+    input clk, rst,
     input s,
     input [3:0] statusIn,
 

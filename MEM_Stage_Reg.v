@@ -9,10 +9,10 @@ module MEM_Stage_Reg(
 
     always @(posedge clk or posedge rst) begin
         if(rst) begin 
-            {wbEn, memReadEn, aluResult, memReadValue, dst} = 70'b;
+            {wbEn, memReadEn, aluResult, memReadValue, dst} = 70'b0;
         end
         else begin
-            {wbEn, memReadEn, aluResult, memReadValue, dst} <= {wbEnIn, memReadEnIn, aluResultIn, memReadValueIn, dstIn}
+            {wbEn, memReadEn, aluResult, memReadValue, dst} <= {wbEnIn, memReadEnIn, aluResultIn, memReadValueIn, dstIn};
         end
     end
 
