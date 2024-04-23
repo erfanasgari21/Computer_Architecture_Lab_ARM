@@ -9,8 +9,10 @@ module IF_Stage_Reg(
             instruction = 32'b0;
         end 
         else begin
-            pc = pcIn;
-            instruction = instructionIn;
+            if(freeze==1'b0) begin
+                pc = pcIn;
+                instruction = instructionIn;
+            end
         end
     end
 endmodule
