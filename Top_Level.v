@@ -67,7 +67,5 @@ module Top_Level(
     
     WB_Stage        WB(clk, rst, dest_MEM_Reg, memResult_MEM_Reg, resultALU_MEM_Reg, memReadEn_MEM_Reg, writeBackEn_MEM_Reg, writeBackDest_WB, writeBackValue_WB, writeBackEn_WB);
     
-    
-
 endmodule
 
