@@ -4,7 +4,7 @@ module Val_Generator(
     input [11:0] shiftOperand,
     output reg[31:0] valOut
 );
-
+    integer shiftValue=0;
     always@(valRm, imm, shiftOperand)
     begin
         valOut = 32'b0;
@@ -12,14 +12,16 @@ module Val_Generator(
             valOut = shiftOperand;
         end
         else if(imm) begin
-            valOut = (shiftOperand[7:0] >> shiftOperand[11:8]) | (shiftOperand[7:0] << (32-shiftOperand[11:8]));
+            shiftValue = (shiftOperand[11:8])*2;
+            valOut = (shiftOperand[7:0]<<(32-shiftValue)) | (shiftOperand[7:0]>>(shiftValue));
         end
         else if(~shiftOperand[4]) begin
+            shiftValue = (shiftOperand[11:7]);
             case(shiftOperand[6:5])
-                2'b00: valOut = valRm << shiftOperand[11:7];
-                2'b01: valOut = valRm >> shiftOperand[11:7];
-                2'b10: valOut = valRm >>> shiftOperand[11:7];
-                2'b11: valOut = (valRm >> shiftOperand[11:7]) | (valRm << (32-shiftOperand[11:7]));
+                2'b00: valOut = valRm << shiftValue;
+                2'b01: valOut = valRm >> shiftValue;
+                2'b10: valOut = valRm >>> shiftValue;
+                2'b11: valOut = (valRm >> shiftValue) | (valRm << (32-shiftValue));
             endcase
         end
     end

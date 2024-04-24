@@ -5,7 +5,7 @@ module Register_File(
     input writeBackEn,
     output[31:0] reg1, reg2
 );
-    integer i;
+    integer i=0;
     reg[31:0] registerFile[14:0];
     
     assign reg1 = registerFile[src1];
