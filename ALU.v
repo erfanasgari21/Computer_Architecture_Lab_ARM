@@ -12,7 +12,7 @@ module ALU(
         {V, C, resultALU} = 34'b0;
         case(aluCmd)
             4'b0001: resultALU = in2;
-            4'b1001: resultALU = ~in1;
+            4'b1001: resultALU = ~in2;
             4'b0010: begin
                 {C, resultALU} = in1 + in2;
                 V = (resultALU[31] != in1[31]) && (in1[31]==in2[31]);
@@ -26,7 +26,7 @@ module ALU(
                 V = (resultALU[31] != in1[31]) && (in1[31]==~in2[31]);
             end
             4'b0101: begin 
-                {C, resultALU} = in1 - in2 - ~c;
+                {C, resultALU} = in1 - in2 - {31'b0, ~c};
                 V = (resultALU[31] != in1[31]) && (in1[31]==~in2[31]);
             end
             4'b0110: resultALU = in1 & in2;
@@ -37,7 +37,7 @@ module ALU(
     end
 
     assign N = resultALU[31];
-    assign Z = (resultALU == 0);
-    assign statusBits = {N, Z, V, C};
+    assign Z = (resultALU == 32'b0);
+    assign statusBits = {N, Z, C, V};
 
 endmodule

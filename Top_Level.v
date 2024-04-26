@@ -65,7 +65,7 @@ module Top_Level(
     EXE_Stage_Reg   EXE_Reg(clk, rst, writeBackEn_ID_Reg, memReadEn_ID_Reg, memWriteEn_ID_Reg, resultALU_EXE, valRm_ID_Reg, dest_ID_Reg, writeBackEn_EXE_Reg, memReadEn_EXE_Reg, memWriteEn_EXE_Reg, resultALU_EXE_Reg, storeVal_EXE_Reg, dest_EXE_Reg);
     Status_Reg      Status(clk, rst, s_ID_Reg, statusReg_EXE, statusReg);
 
-    MEM_Stage       MEM(clk, rst, memReadEn_EXE_Reg, memWriteEn_EXE_Reg, resultALU_EXE_Reg, valRm_ID_Reg, memResult_MEM);
+    MEM_Stage       MEM(clk, rst, memReadEn_EXE_Reg, memWriteEn_EXE_Reg, resultALU_EXE_Reg, storeVal_EXE_Reg, memResult_MEM);
     MEM_Stage_Reg   MEM_Reg(clk, rst, writeBackEn_EXE_Reg, memReadEn_EXE_Reg, resultALU_EXE_Reg, memResult_MEM, dest_EXE_Reg, writeBackEn_MEM_Reg, memReadEn_MEM_Reg, resultALU_MEM_Reg, memResult_MEM_Reg, dest_MEM_Reg);
     
     WB_Stage        WB(clk, rst, dest_MEM_Reg, memResult_MEM_Reg, resultALU_MEM_Reg, memReadEn_MEM_Reg, writeBackEn_MEM_Reg, writeBackDest_WB, writeBackValue_WB, writeBackEn_WB);

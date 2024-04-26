@@ -6,10 +6,12 @@ module Register_File(
     output[31:0] reg1, reg2
 );
     integer i=0;
+    wire overIndex;
     reg[31:0] registerFile[14:0];
     
-    assign reg1 = registerFile[src1];
-    assign reg2 = registerFile[src2];
+    assign overIndex = (src1==4'b1111) | (src2==4'b1111);
+    assign reg1 = registerFile[overIndex? 4'b0:src1];
+    assign reg2 = registerFile[overIndex? 4'b0:src2];
 
     initial begin
         for(i=0; i<15; i=i+1) begin
