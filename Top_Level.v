@@ -25,6 +25,7 @@ module Top_Level(
     wire[23:0] signedImm24_ID_Reg;
     wire[3:0] dest_ID_Reg;
     wire[3:0] statusReg_ID_Reg;
+    wire[3:0] src1_ID_Reg, src2_ID_Reg;
 
     // EXE Stage
     wire[31:0]resultALU_EXE, branchAddress_EXE;
@@ -59,7 +60,7 @@ module Top_Level(
     
     Hazard_Unit     HU(src1_ID, src2_ID, twoSrc_ID, writeBackEn_ID_Reg, writeBackEn_EXE_Reg, dest_ID_Reg, dest_EXE_Reg, freeze);
     ID_Stage        ID(clk, rst, inst_IF_Reg, writeBackValue_WB, writeBackDest_WB, writeBackEn_WB, freeze, statusReg, valRn_ID, valRm_ID, signedImm24_ID, shiftOperand_ID,exeCmd_ID, destID_ID, imm_ID, writeBackEnID_ID, memReadEn_ID, memWriteEn_ID, b_ID, s_ID, src1_ID, src2_ID,  twoSrc_ID);
-    ID_Stage_Reg    ID_Reg(clk, rst, b_ID_Reg, writeBackEnID_ID, memReadEn_ID, memWriteEn_ID, b_ID, s_ID, exeCmd_ID, pc_IF_Reg, valRn_ID, valRm_ID, imm_ID, shiftOperand_ID, signedImm24_ID, destID_ID, statusReg, writeBackEn_ID_Reg, memReadEn_ID_Reg, memWriteEn_ID_Reg, b_ID_Reg, s_ID_Reg, exeCmd_ID_Reg, pc_ID_Reg, valRn_ID_Reg, valRm_ID_Reg, imm_ID_Reg, shiftOperand_ID_Reg, signedImm24_ID_Reg, dest_ID_Reg, statusReg_ID_Reg);
+    ID_Stage_Reg    ID_Reg(clk, rst, b_ID_Reg, writeBackEnID_ID, memReadEn_ID, memWriteEn_ID, b_ID, s_ID, exeCmd_ID, pc_IF_Reg, valRn_ID, valRm_ID, imm_ID, shiftOperand_ID, signedImm24_ID, destID_ID, statusReg, src1_ID, src2_ID, writeBackEn_ID_Reg, memReadEn_ID_Reg, memWriteEn_ID_Reg, b_ID_Reg, s_ID_Reg, exeCmd_ID_Reg, pc_ID_Reg, valRn_ID_Reg, valRm_ID_Reg, imm_ID_Reg, shiftOperand_ID_Reg, signedImm24_ID_Reg, dest_ID_Reg, statusReg_ID_Reg, src1_ID_Reg, src2_ID_Reg);
     
     EXE_Stage       EXE(clk, rst, exeCmd_ID_Reg, memReadEn_ID_Reg, memWriteEn_ID_Reg, pc_ID_Reg, valRn_ID_Reg, valRm_ID_Reg, imm_ID_Reg, shiftOperand_ID_Reg, signedImm24_ID_Reg, statusReg_ID_Reg, resultALU_EXE, branchAddress_EXE, statusReg_EXE);
     EXE_Stage_Reg   EXE_Reg(clk, rst, writeBackEn_ID_Reg, memReadEn_ID_Reg, memWriteEn_ID_Reg, resultALU_EXE, valRm_ID_Reg, dest_ID_Reg, writeBackEn_EXE_Reg, memReadEn_EXE_Reg, memWriteEn_EXE_Reg, resultALU_EXE_Reg, storeVal_EXE_Reg, dest_EXE_Reg);
