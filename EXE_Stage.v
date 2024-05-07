@@ -9,8 +9,8 @@ module EXE_Stage(
     input[11:0] shiftOperand,
     input[23:0] signedImm24,
     input[3:0] statusRegID,
-    input selSrc1, selSrc2;
-    input[31:0] forwardingWB, forwardingMEM;
+    input selSrc1, selSrc2,
+    input[31:0] forwardingWB, forwardingMEM,
 
     //to MEM stage
     output [31:0]resultALU, branchAddress,

@@ -18,7 +18,7 @@ module ID_Stage_Reg(
     output reg[23:0] signedImm24,
     output reg[3:0] dest,
     output reg[3:0] statusReg,
-    output[3:0] src1, src2
+    output reg[3:0] src1, src2
 );
     always @(posedge clk or posedge rst) begin
         if(rst) begin
