@@ -19,7 +19,14 @@ module ID_Stage_Reg(
     output reg[3:0] statusReg
 );
     always @(posedge clk or posedge rst) begin
-        if(rst || flush) begin
+        if(rst) begin
+            {writeBackEn, memReadEn, memWriteEn, b, s, imm} <= 6'b0;
+            {exeCmd, dest, statusReg} <= 12'b0;
+            shiftOperand <= 12'b0;
+            signedImm24 <= 24'b0;
+            {pc, valRn, valRm} <= 96'b0;
+        end
+        else if(flush) begin
             {writeBackEn, memReadEn, memWriteEn, b, s, imm} <= 6'b0;
             {exeCmd, dest, statusReg} <= 12'b0;
             shiftOperand <= 12'b0;
