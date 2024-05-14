@@ -1,5 +1,5 @@
 module Mux3_32b(
-    input select, 
+    input[1:0] select, 
     input[31:0] in1, in2, in3,
     output[31:0] out
     );
