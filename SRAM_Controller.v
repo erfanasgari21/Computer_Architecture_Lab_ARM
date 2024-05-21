@@ -26,8 +26,25 @@ module SRAM_Controller (
     output          SRAM_CE_N,
     output          SRAM_OE_N
 );
-
+    reg [2:0] ps, ns;
     assign {SRAM_UB_N, SRAM_LB_N, SRAM_CE_N, SRAM_OE_N} = 4'b0;
-    
+
+    always @(ps or serIn or co1 or co2 or coD or dataNum) begin
+        ns = `IDLE;
+        case(ps) 
+            `IDLE : ns = serIn ? `IDLE : `READ_PORT;
+            `READ_PORT : ns = co1 ? `READ_COUNT : `READ_PORT;
+            `READ_COUNT : ns = (co2 && (dataNum != 4'b0001)) ? `DATA_TRANS : (co2 && (dataNum == 4'b0001)) ? `IDLE : `READ_COUNT;
+            `DATA_TRANS : ns = coD ? `IDLE : `DATA_TRANS;
+        endcase
+    end
+
+    always @(posedge clk) begin
+        if(rst)
+            ps <= `IDLE;
+        else if (clkEn)
+            ps <= ns;
+    end
 
 endmodule
+
