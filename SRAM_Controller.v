@@ -1,3 +1,8 @@
+`define IDLE 3'b000
+`define WRITE_LOW 3'b001
+`define WRITE 3'b010
+`define DATA_TRANS 3'b011
+
 module SRAM_Controller (
     input clk,
     input rst,
