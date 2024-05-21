@@ -1,5 +1,5 @@
 module EXE_Stage_Reg(
-    input clk, rst, 
+    input clk, rst, ready,
     input writeBackEnIn, memReadEnIn, memWriteEnIn, 
     input[31:0] resultALUIn, storeValIn,
     input[3:0] destIn,
@@ -14,10 +14,10 @@ module EXE_Stage_Reg(
             {resultALU, storeVal} <= 64'b0;
             dest <= 4'b0;
         end
-        else begin
-            {writeBackEn, memReadEn, memWriteEn} <= {writeBackEnIn, memReadEnIn, memWriteEnIn};
-            {resultALU, storeVal} <= {resultALUIn, storeValIn};
-            dest <= destIn;
+        else if(ready) begin
+                {writeBackEn, memReadEn, memWriteEn} <= {writeBackEnIn, memReadEnIn, memWriteEnIn};
+                {resultALU, storeVal} <= {resultALUIn, storeValIn};
+                dest <= destIn;
         end
     end
 endmodule

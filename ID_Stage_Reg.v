@@ -1,5 +1,5 @@
 module ID_Stage_Reg(
-    input clk, rst, flush, 
+    input clk, rst, flush, ready,
     input writeBackEnIn, memReadEnIn, memWriteEnIn, bIn, sIn, 
     input[3:0] exeCmdIn, 
     input[31:0] pcIn, valRnIn, valRmIn,
@@ -37,7 +37,7 @@ module ID_Stage_Reg(
             {pc, valRn, valRm} <= 96'b0;
             {src1, src2} <= 8'b0;
         end
-        else begin
+        else if(ready) begin
             {writeBackEn, memReadEn, memWriteEn, b, s, imm} <= {writeBackEnIn, memReadEnIn, memWriteEnIn, bIn, sIn, immIn};
             {exeCmd, dest, statusReg} <= {exeCmdIn, destIn, statusRegIn};
             shiftOperand <= shiftOperandIn;
