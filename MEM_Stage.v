@@ -1,7 +1,6 @@
 module MEM_Stage(
-    input clk, rst, memRead, memWrite,
+    input clk, rst, writeBackEn_EXE_Reg, memRead, memWrite,
     input [31:0] address, data,
-    input writeBackEn_EXE_Reg,
     inout [15:0] sramData,
     output [17:0] sramAddress,
     output [4:0] sramCtrl,
