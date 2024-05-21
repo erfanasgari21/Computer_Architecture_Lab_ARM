@@ -8,9 +8,12 @@ module MEM_Stage(
     output [31:0] memResult,
     output writeBackEn, ready
 );
+
     SRAM_Controller sramctrl(clk, rst, memWrite, memRead, address, data, memResult, ready, sramData, sramAddress,
         sramCtrl[4], sramCtrl[3], sramCtrl[2], sramCtrl[1], sramCtrl[0]);
+
     assign writeBackEn = ready ? writeBackEn_EXE_Reg : 1'b0; 
+
 endmodule
 
 

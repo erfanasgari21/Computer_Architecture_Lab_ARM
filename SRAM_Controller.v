@@ -1,7 +1,10 @@
-`define IDLE 3'b000
-`define WRITE_LOW 3'b001
-`define WRITE 3'b010
-`define DATA_TRANS 3'b011
+`define IDLE 3'd0
+`define WRITE_LOW 3'd1
+`define WRITE_HIGH 3'd2
+`define READ_ADDR 3'd3
+`define READ_LOW 3'd4
+`define READ_HIGH 3'd5
+`define STALL 3'd6
 
 module SRAM_Controller (
     input clk,
