@@ -1,5 +1,5 @@
 module MEM_Stage_Reg(
-    input clk, rst, wbEnIn, memReadEnIn,
+    input clk, rst, ready, wbEnIn, memReadEnIn,
     input [31:0] aluResultIn, memReadValueIn,
     input [3:0] dstIn,
     output reg wbEn, memReadEn,
@@ -11,7 +11,7 @@ module MEM_Stage_Reg(
         if(rst) begin 
             {wbEn, memReadEn, aluResult, memReadValue, dst} = 70'b0;
         end
-        else begin
+        else if(ready) begin
             {wbEn, memReadEn, aluResult, memReadValue, dst} <= {wbEnIn, memReadEnIn, aluResultIn, memReadValueIn, dstIn};
         end
     end
