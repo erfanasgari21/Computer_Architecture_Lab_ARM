@@ -2,10 +2,9 @@ module Counter_3b(
     input clk, rst,
     input cntEn, cntLd,
     input [2:0] p,
-    output reg [2:0] count,
     output co
 );
-    
+    reg [2:0] count;
     always @(posedge clk) begin
         if(rst)
             count <= 3'b0;
