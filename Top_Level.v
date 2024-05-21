@@ -1,5 +1,8 @@
 module Top_Level(
-    input clk, rst, forwardingEn
+    input clk, rst, forwardingEn,
+    inout [15:0]sramData, 
+    input [17:0]sramAddress,
+    input [4:0]sramCtrl
 );
     // IF Stage
     wire [31:0] pc_IF, inst_IF;
@@ -41,6 +44,7 @@ module Top_Level(
 
     // MEM Stage
     wire[31:0] memResult_MEM;
+    wire writeBackEn_MEM;
 
     // MEM Stage Reg
     wire writeBackEn_MEM_Reg, memReadEn_MEM_Reg;
@@ -69,8 +73,8 @@ module Top_Level(
     EXE_Stage_Reg   EXE_Reg(clk, rst, writeBackEn_ID_Reg, memReadEn_ID_Reg, memWriteEn_ID_Reg, resultALU_EXE, valRm_ID_Reg, dest_ID_Reg, writeBackEn_EXE_Reg, memReadEn_EXE_Reg, memWriteEn_EXE_Reg, resultALU_EXE_Reg, storeVal_EXE_Reg, dest_EXE_Reg);
     Status_Reg      Status(clk, rst, s_ID_Reg, statusReg_EXE, statusReg);
 
-    MEM_Stage       MEM(clk, rst, memReadEn_EXE_Reg, memWriteEn_EXE_Reg, resultALU_EXE_Reg, storeVal_EXE_Reg, memResult_MEM);
-    MEM_Stage_Reg   MEM_Reg(clk, rst, writeBackEn_EXE_Reg, memReadEn_EXE_Reg, resultALU_EXE_Reg, memResult_MEM, dest_EXE_Reg, writeBackEn_MEM_Reg, memReadEn_MEM_Reg, resultALU_MEM_Reg, memResult_MEM_Reg, dest_MEM_Reg);
+    MEM_Stage       MEM(clk, rst, writeBackEn_EXE_Reg, memReadEn_EXE_Reg, memWriteEn_EXE_Reg, resultALU_EXE_Reg, storeVal_EXE_Reg, sramData, sramAddress, sramCtrl, memResult_MEM, writeBackEn_MEM, ready);
+    MEM_Stage_Reg   MEM_Reg(clk, rst, writeBackEn_MEM, memReadEn_EXE_Reg, resultALU_EXE_Reg, memResult_MEM, dest_EXE_Reg, writeBackEn_MEM_Reg, memReadEn_MEM_Reg, resultALU_MEM_Reg, memResult_MEM_Reg, dest_MEM_Reg);
     Forwarding_Unit FU(forwardingEn, src1_ID_Reg, src2_ID_Reg, dest_EXE_Reg, dest_MEM_Reg, writeBackEn_EXE_Reg, writeBackEn_MEM_Reg, selSrc1, selSrc2);
 
     WB_Stage        WB(clk, rst, dest_MEM_Reg, memResult_MEM_Reg, resultALU_MEM_Reg, memReadEn_MEM_Reg, writeBackEn_MEM_Reg, writeBackDest_WB, writeBackValue_WB, writeBackEn_WB);
