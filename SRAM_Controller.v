@@ -16,10 +16,10 @@ module SRAM_Controller (
     input[31:0] writeData,
 
     output[31:0] readData,
-    output ready,
+    output reg ready,
 
     inout[15:0]     SRAM_DQ,
-    output[17:0]reg SRAM_ADDR,
+    output reg [17:0] SRAM_ADDR,
     output reg      SRAM_WE_N,
     output          SRAM_UB_N,
     output          SRAM_LB_N,
@@ -27,7 +27,7 @@ module SRAM_Controller (
     output          SRAM_OE_N
 );
     reg [2:0] ps, ns;
-    reg cntEn, cntLd, addr;
+    reg cntEn, cntLd;
     reg [15:0] dataLow, dataHigh;
     wire [17:0] sramAddress;
     wire co;
@@ -36,7 +36,7 @@ module SRAM_Controller (
 
     assign {SRAM_UB_N, SRAM_LB_N, SRAM_CE_N, SRAM_OE_N} = 4'b0;
 
-    assign sramAddress = ((address-1024))[18:1]
+    assign sramAddress = ((address-1024))>>1;
 
     always @(ps or wrEn or rdEn or co) begin
         ns = `IDLE;
@@ -54,7 +54,7 @@ module SRAM_Controller (
     always @(posedge clk) begin
         if(rst)
             ps <= `IDLE;
-        else if (clkEn)
+        else
             ps <= ns;
     end
 
