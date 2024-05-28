@@ -74,7 +74,7 @@ module SRAM_Controller (
             `WRITE_HIGH :   begin SRAM_WE_N=1'b0; SRAM_ADDR={sramAddress, 1'b1}; end
             `ADDR_LOW :     begin SRAM_ADDR={sramAddress, 1'b0}; end 
             `READ_LOW :     begin SRAM_ADDR={sramAddress, 1'b0}; dataLow=SRAM_DQ; end
-            `ARRD_HIGH :    begin SRAM_ADDR={sramAddress, 1'b1}; end
+            `ADDR_HIGH :    begin SRAM_ADDR={sramAddress, 1'b1}; end
             `READ_HIGH :    begin SRAM_ADDR={sramAddress, 1'b1}; dataHigh=SRAM_DQ; end
             `READY :        begin ready=1; end
         endcase
