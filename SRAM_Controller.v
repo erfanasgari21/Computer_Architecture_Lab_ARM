@@ -48,7 +48,7 @@ module SRAM_Controller (
             `READ_ADDR :    ns = `READ_LOW;
             `READ_LOW :     ns = `READ_HIGH;
             `READ_HIGH :    ns = `STALL;
-            `STALL :        ns = co ? `IDLE : `READY;
+            `STALL :        ns = co ? `READY : `STALL;
             `READY :        ns = `IDLE;
         endcase
     end
