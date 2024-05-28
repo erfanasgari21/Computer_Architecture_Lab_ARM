@@ -60,7 +60,7 @@ module SRAM_Controller (
             ps <= ns;
     end
 
-    always @(ps, wrEn, rdEn) begin
+    always @(ps or wrEn or rdEn) begin
         ready = 1'b0; 
         cntEn = 1'b1;
         cntLd = 1'b0;
