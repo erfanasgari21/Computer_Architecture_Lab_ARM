@@ -5,6 +5,7 @@
 `define READ_LOW 3'd4
 `define READ_HIGH 3'd5
 `define STALL 3'd6
+`define STALL 3'd7
 
 module SRAM_Controller (
     input clk,
@@ -29,14 +30,14 @@ module SRAM_Controller (
     reg [2:0] ps, ns;
     reg cntEn, cntLd;
     reg [15:0] dataLow, dataHigh;
-    wire [17:0] sramAddress;
+    wire [16:0] sramAddress;
     wire co;
 
-    Counter_3b cnt3b(clk, rst, cntEn, cntLd, 3'b011, co);
+    Counter_3b cnt3b(clk, rst, cntEn, cntLd, 3'b111, co);
 
     assign {SRAM_UB_N, SRAM_LB_N, SRAM_CE_N, SRAM_OE_N} = 4'b0;
 
-    assign sramAddress = ((address-1024))>>1;
+    assign sramAddress = ((address-1024))>>2;
 
     always @(ps or wrEn or rdEn or co) begin
         ns = `IDLE;
@@ -47,7 +48,8 @@ module SRAM_Controller (
             `READ_ADDR :    ns = `READ_LOW;
             `READ_LOW :     ns = `READ_HIGH;
             `READ_HIGH :    ns = `STALL;
-            `STALL :        ns = co ? `IDLE : `STALL;
+            `STALL :        ns = co ? `IDLE : `READY;
+            `READY :        ns = `IDLE
         endcase
     end
 
@@ -65,12 +67,13 @@ module SRAM_Controller (
         SRAM_ADDR = 18'b0;
         SRAM_WE_N = 1'b1;
         case(ps) 
-            `IDLE :         begin ready=1'b1; cntEn=1'b0; cntLd=1'b1; end
-            `WRITE_LOW :    begin SRAM_WE_N=1'b0; SRAM_ADDR=sramAddress; end
-            `WRITE_HIGH :   begin SRAM_WE_N=1'b0; SRAM_ADDR=sramAddress+18'b1; end
-            `READ_ADDR :    begin SRAM_ADDR=sramAddress; end 
-            `READ_LOW :     begin SRAM_ADDR=sramAddress+18'b1; dataLow=SRAM_DQ; end
+            `IDLE :         begin ready=~(wrEn|rdEn); cntEn=1'b0; cntLd=1'b1; end
+            `WRITE_LOW :    begin SRAM_WE_N=1'b0; SRAM_ADDR={sramAddress, 1'b0}; end
+            `WRITE_HIGH :   begin SRAM_WE_N=1'b0; SRAM_ADDR={sramAddress, 1'b1}; end
+            `READ_ADDR :    begin SRAM_ADDR={sramAddress, 1'b0}; end 
+            `READ_LOW :     begin SRAM_ADDR={sramAddress, 1'b1}; dataLow=SRAM_DQ; end
             `READ_HIGH :    begin dataHigh=SRAM_DQ; end
+            `READY :        begin ready=1; end
         endcase
     end
 
