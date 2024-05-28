@@ -1,11 +1,12 @@
-`define IDLE 3'd0
-`define WRITE_LOW 3'd1
-`define WRITE_HIGH 3'd2
-`define READ_ADDR 3'd3
-`define READ_LOW 3'd4
-`define READ_HIGH 3'd5
-`define STALL 3'd6
-`define READY 3'd7
+`define IDLE 4'd0
+`define WRITE_LOW 4'd1
+`define WRITE_HIGH 4'd2
+`define ADDR_LOW 4'd3
+`define READ_LOW 4'd4
+`define ADDR_HIGH 4'd5
+`define READ_HIGH 4'd6
+`define STALL 4'd7
+`define READY 4'd8
 
 module SRAM_Controller (
     input clk,
@@ -27,13 +28,13 @@ module SRAM_Controller (
     output          SRAM_CE_N,
     output          SRAM_OE_N
 );
-    reg [2:0] ps, ns;
+    reg [3:0] ps, ns;
     reg cntEn, cntLd;
     reg [15:0] dataLow, dataHigh;
     wire [16:0] sramAddress;
     wire co;
 
-    Counter_3b cnt3b(clk, rst, cntEn, cntLd, 3'b100, co);
+    Counter_3b cnt3b(clk, rst, cntEn, cntLd, 3'b010, co);
 
     assign {SRAM_UB_N, SRAM_LB_N, SRAM_CE_N, SRAM_OE_N} = 4'b0;
 
@@ -42,11 +43,12 @@ module SRAM_Controller (
     always @(ps or wrEn or rdEn or co) begin
         ns = `IDLE;
         case(ps) 
-            `IDLE :         ns = wrEn ? `WRITE_LOW : rdEn ? `READ_ADDR : `IDLE;
+            `IDLE :         ns = wrEn ? `WRITE_LOW : rdEn ? `ADDR_LOW : `IDLE;
             `WRITE_LOW :    ns = `WRITE_HIGH;
             `WRITE_HIGH :   ns = `STALL;
-            `READ_ADDR :    ns = `READ_LOW;
-            `READ_LOW :     ns = `READ_HIGH;
+            `ADDR_LOW :     ns = `READ_LOW;
+            `READ_LOW :     ns = `ADDR_HIGH;
+            `ADDR_HIGH :    ns = `READ_HIGH;
             `READ_HIGH :    ns = `STALL;
             `STALL :        ns = co ? `READY : `STALL;
             `READY :        ns = `IDLE;
@@ -70,9 +72,10 @@ module SRAM_Controller (
             `IDLE :         begin ready=~(wrEn|rdEn); cntEn=1'b0; cntLd=1'b1; end
             `WRITE_LOW :    begin SRAM_WE_N=1'b0; SRAM_ADDR={sramAddress, 1'b0}; end
             `WRITE_HIGH :   begin SRAM_WE_N=1'b0; SRAM_ADDR={sramAddress, 1'b1}; end
-            `READ_ADDR :    begin SRAM_ADDR={sramAddress, 1'b0}; end 
-            `READ_LOW :     begin SRAM_ADDR={sramAddress, 1'b1}; dataLow=SRAM_DQ; end
-            `READ_HIGH :    begin dataHigh=SRAM_DQ; end
+            `ADDR_LOW :     begin SRAM_ADDR={sramAddress, 1'b0}; end 
+            `READ_LOW :     begin SRAM_ADDR={sramAddress, 1'b0}; dataLow=SRAM_DQ; end
+            `ARRD_HIGH :    begin SRAM_ADDR={sramAddress, 1'b1}; end
+            `READ_HIGH :    begin SRAM_ADDR={sramAddress, 1'b1}; dataHigh=SRAM_DQ; end
             `READY :        begin ready=1; end
         endcase
     end
