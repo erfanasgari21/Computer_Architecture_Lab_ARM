@@ -5,7 +5,7 @@
 `define READ_LOW 3'd4
 `define READ_HIGH 3'd5
 `define STALL 3'd6
-`define STALL 3'd7
+`define READY 3'd7
 
 module SRAM_Controller (
     input clk,
@@ -33,7 +33,7 @@ module SRAM_Controller (
     wire [16:0] sramAddress;
     wire co;
 
-    Counter_3b cnt3b(clk, rst, cntEn, cntLd, 3'b111, co);
+    Counter_3b cnt3b(clk, rst, cntEn, cntLd, 3'b100, co);
 
     assign {SRAM_UB_N, SRAM_LB_N, SRAM_CE_N, SRAM_OE_N} = 4'b0;
 
@@ -49,7 +49,7 @@ module SRAM_Controller (
             `READ_LOW :     ns = `READ_HIGH;
             `READ_HIGH :    ns = `STALL;
             `STALL :        ns = co ? `IDLE : `READY;
-            `READY :        ns = `IDLE
+            `READY :        ns = `IDLE;
         endcase
     end
 
