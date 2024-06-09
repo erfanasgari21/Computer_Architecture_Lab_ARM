@@ -2,7 +2,7 @@
 module SRAM(
     input clk, rst, memWrite_n,
     input [17:0] address, 
-    inout [15:0] data,
+    inout [15:0] data
 );
     integer i=0;
     reg [15:0] memory[0:127];
