@@ -14,7 +14,7 @@ module Counter_3b(
             count <= count + 3'd1;
     end
 
-    assign co= (count==4'b111) ? 1'b1 : 1'b0;
+    assign co= (count==3'b111) ? 1'b1 : 1'b0;
 
 endmodule
 
