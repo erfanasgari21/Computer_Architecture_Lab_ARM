@@ -34,7 +34,7 @@ module SRAM_Controller (
     wire [16:0] sramAddress;
     wire co;
 
-    Counter_3b cnt3b(clk, rst, cntEn, cntLd, 3'b011, co);
+    Counter_3b cnt3b(clk, rst, cntEn, cntLd, 3'b100, co);
 
     assign {SRAM_UB_N, SRAM_LB_N, SRAM_CE_N, SRAM_OE_N} = 4'b0;
 
@@ -49,7 +49,7 @@ module SRAM_Controller (
             `ADDR_LOW :     ns = `READ_LOW;
             `READ_LOW :     ns = `ADDR_HIGH;
             `ADDR_HIGH :    ns = `READ_HIGH;
-            `READ_HIGH :    ns = `STALL;
+            `READ_HIGH :    ns = `READY;
             `STALL :        ns = co ? `READY : `STALL;
             `READY :        ns = `IDLE;
         endcase
