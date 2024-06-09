@@ -1,8 +1,8 @@
 module Top_Level(
     input clk, rst, forwardingEn,
     inout [15:0]sramData, 
-    input [17:0]sramAddress,
-    input [4:0]sramCtrl
+    output [17:0]sramAddress,
+    output [4:0]sramCtrl
 );
     // IF Stage
     wire [31:0] pc_IF, inst_IF;

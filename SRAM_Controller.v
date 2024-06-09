@@ -40,7 +40,7 @@ module SRAM_Controller (
 
     assign sramAddress = ((address-1024))>>2;
 
-    always @(ps or wrEn or rdEn or co) begin
+    always @(ps, wrEn, rdEn, co) begin
         ns = `IDLE;
         case(ps) 
             `IDLE :         ns = wrEn ? `WRITE_LOW : rdEn ? `ADDR_LOW : `IDLE;
@@ -62,7 +62,7 @@ module SRAM_Controller (
             ps <= ns;
     end
 
-    always @(ps or wrEn or rdEn, wrEn, rdEn) begin
+    always @(ps, wrEn, rdEn) begin
         ready = 1'b0; 
         cntEn = 1'b1;
         cntLd = 1'b0;
