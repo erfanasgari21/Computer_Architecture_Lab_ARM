@@ -18,7 +18,7 @@ module SRAM_Controller (
     input[31:0] writeData,
 
     output[31:0] readData,
-    output reg ready,
+    output ready,
 
     inout[15:0]     SRAM_DQ,
     output reg [17:0] SRAM_ADDR,
@@ -63,25 +63,24 @@ module SRAM_Controller (
     end
 
     always @(ps, wrEn, rdEn) begin
-        ready = 1'b0; 
         cntEn = 1'b1;
         cntLd = 1'b0;
         SRAM_ADDR = 18'b0;
         SRAM_WE_N = 1'b1;
         case(ps) 
-            `IDLE :         begin ready=~(wrEn|rdEn); cntEn=1'b0; cntLd=1'b1; end
+            `IDLE :         begin cntEn=1'b0; cntLd=1'b1; end
             `WRITE_LOW :    begin SRAM_WE_N=1'b0; SRAM_ADDR={sramAddress, 1'b0}; end
             `WRITE_HIGH :   begin SRAM_WE_N=1'b0; SRAM_ADDR={sramAddress, 1'b1}; end
             `ADDR_LOW :     begin SRAM_ADDR={sramAddress, 1'b0}; end 
             `READ_LOW :     begin SRAM_ADDR={sramAddress, 1'b0}; dataLow=SRAM_DQ; end
             `ADDR_HIGH :    begin SRAM_ADDR={sramAddress, 1'b1}; end
             `READ_HIGH :    begin SRAM_ADDR={sramAddress, 1'b1}; dataHigh=SRAM_DQ; end
-            `READY :        begin ready=1; end
         endcase
     end
 
     assign SRAM_DQ = ps==`WRITE_LOW ? writeData[15:0] : ps==`WRITE_HIGH ? writeData[31:16] : 16'bz;
     assign readData = {dataHigh, dataLow};
+    assign ready = ps == `READY;
 
 endmodule
 
