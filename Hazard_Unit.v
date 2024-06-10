@@ -19,7 +19,7 @@ module Hazard_Unit(
     assign cond4 = wbEn_MEM && twoSrc && (src2==wbDst_MEM);
 
     assign cond5 = memReadEn_EXE && (src1==wbDst_EXE);
-    assign cond6 = memReadEn_EXE && twoSrc && (src2==wbDst_EXE);
+    assign cond6 = memReadEn_EXE && (src2==wbDst_EXE);
 
     assign freeze = forwardingEn ? (cond5 || cond6) : (cond1 || cond2 || cond3 || cond4);
 
