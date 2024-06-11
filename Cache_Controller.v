@@ -1,7 +1,6 @@
-`define IDLE 2'd0;
-`define READ_LOW 2'd1;
-`define READ_HIGH 2'd2;
-`define WRITE 2'd3;
+`define IDLE 1'd0;
+`define READ_HIGH 1'd1;
+
 
 module Cache_Controller(
     input clk, rst,
@@ -47,13 +46,29 @@ module Cache_Controller(
 
     assign sramRdEn = rdEn & ~hit;
     assign sramWrEn = wrEn; 
-    assign ready = hit | (sramReady & (state == `READ_HIGH | state == `WRITE))  ; // note: to be completed
-    assign sramAddress = address;
+    
     assign sramWriteData = writeData; 
 
     // STATE MACHINE
-    reg [1:0] ps, ns;
+    
+    reg ps, ns;
+    assign ready =  ~(wrEn | rdEn) | hit | (sramReady & (ps == `READ_HIGH | sramWrEn));
+    assign sramAddress = sramWrEn ? address : ps ==`IDLE ? {address >> 3, 3'b000} : {address >> 3, 3'b100};
+    
+    always @(ps, sramRdEn, sramWrEn, sramReady) begin
+        ns = `IDLE;
+        case(ps)
+            `IDLE:      ns = (sramRdEn & sramReady) ? `READ_HIGH : `IDLE;
+            `READ_HIGH: ns = sramReady ? `IDLE : `READ_HIGH;
+        endcase
+    end
 
-    always @(ps,)
+    always @(posedge clk) begin
+        if(rst)
+            ps <= `IDLE;
+        else
+            ps <= ns;
+    end
+
 
 endmodule

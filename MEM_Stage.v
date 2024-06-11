@@ -8,14 +8,31 @@ module MEM_Stage(
     output writeBackEn, ready
 );
 
-    SRAM_Controller sramctrl(clk, rst, memWrite, memRead, address, data, memResult, ready, sramData, sramAddress,
+    wire [31:0] sramAddress_Cache;
+    wire sramWrEn, sramRdEn;
+    Cache_Controller cachectrl(clk, rst, 
+        address, data, memWrite, memRead, memResult, ready, 
+        sramAddress_Cache, sramWriteData, sramWrEn, sramRdEn, sramReadData, sramReady);
+    SRAM_Controller sramctrl(clk, rst, 
+        sramWrEn, sramRdEn, sramAddress_Cache, data, memResult, ready, sramData, sramAddress,
         sramCtrl[4], sramCtrl[3], sramCtrl[2], sramCtrl[1], sramCtrl[0]);
 
     assign writeBackEn = ready ? writeBackEn_EXE_Reg : 1'b0; 
 
 endmodule
 
+input [31:0] address,
+    input [31:0] writeData,
+    input wrEn, rdEn,
+    output [31:0] readData,
+    output ready,
 
+    // Sram Controller
+    output [31:0] sramAddress,
+    output [31:0] sramWriteData,
+    output sramWrEn, sramRdEn, 
+    input  [63:0] sramReadData,
+    input  sramReady,
 
 module MEM_Stage_Old(
     input clk, rst, memRead, memWrite,

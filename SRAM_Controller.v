@@ -62,7 +62,7 @@ module SRAM_Controller (
             ps <= ns;
     end
 
-    always @(ps, wrEn, rdEn) begin
+    always @(ps) begin
         cntEn = 1'b1;
         cntLd = 1'b0;
         SRAM_ADDR = 18'b0;
