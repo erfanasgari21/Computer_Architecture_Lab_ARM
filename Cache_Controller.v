@@ -1,5 +1,5 @@
-`define IDLE 1'd0;
-`define READ_HIGH 1'd1;
+`define IDLE 1'd0
+`define READ_HIGH 1'd1
 
 
 module Cache_Controller(
@@ -16,13 +16,13 @@ module Cache_Controller(
     output [31:0] sramWriteData,
     output sramWrEn, sramRdEn, 
     input  [63:0] sramReadData,
-    input  sramReady,
+    input  sramReady
 );
 
     // ADDRESS DECODE
     wire word = address[2];
-    wire index = address[8:3];
-    wire tag = address[18:9];
+    wire [5:0] index = address[8:3];
+    wire [9:0] tag = address[18:9];
 
     // CACHE MEMORY
     reg [63:0] dataWay0 [0:63];

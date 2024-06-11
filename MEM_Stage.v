@@ -22,19 +22,6 @@ module MEM_Stage(
 
 endmodule
 
-input [31:0] address,
-    input [31:0] writeData,
-    input wrEn, rdEn,
-    output [31:0] readData,
-    output ready,
-
-    // Sram Controller
-    output [31:0] sramAddress,
-    output [31:0] sramWriteData,
-    output sramWrEn, sramRdEn, 
-    input  [63:0] sramReadData,
-    input  sramReady,
-
 module MEM_Stage_Old(
     input clk, rst, memRead, memWrite,
     input [31:0] address, data,
