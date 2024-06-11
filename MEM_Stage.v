@@ -9,12 +9,13 @@ module MEM_Stage(
 );
 
     wire [31:0] sramAddress_Cache;
-    wire sramWrEn, sramRdEn;
+    wire [31:0] sramWriteData, sramReadData;
+    wire sramWrEn, sramRdEn, sramReady;
     Cache_Controller cachectrl(clk, rst, 
         address, data, memWrite, memRead, memResult, ready, 
         sramAddress_Cache, sramWriteData, sramWrEn, sramRdEn, sramReadData, sramReady);
     SRAM_Controller sramctrl(clk, rst, 
-        sramWrEn, sramRdEn, sramAddress_Cache, data, memResult, ready, sramData, sramAddress,
+        sramWrEn, sramRdEn, sramAddress_Cache, sramWriteData, sramReadData, sramReady, sramData, sramAddress,
         sramCtrl[4], sramCtrl[3], sramCtrl[2], sramCtrl[1], sramCtrl[0]);
 
     assign writeBackEn = ready ? writeBackEn_EXE_Reg : 1'b0; 
