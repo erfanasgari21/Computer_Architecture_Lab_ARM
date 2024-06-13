@@ -6,7 +6,6 @@ module SRAM(
 );
     integer i=0;
     reg [15:0] memory[0:127];
-    wire[15:0] temp;
 
     initial begin
         for(i=0; i<128; i=i+1) begin
@@ -14,7 +13,7 @@ module SRAM(
         end
     end
 
-    assign data = memWrite_n ? memory[address] : 16'bz;
+    assign data = (memWrite_n & (address<=7'd127)) ? memory[address] : 16'bz;
     
     always @(posedge clk) begin
         if(~memWrite_n) memory[address] <= data;

@@ -9,7 +9,8 @@ module MEM_Stage(
 );
 
     wire [31:0] sramAddress_Cache;
-    wire [31:0] sramWriteData, sramReadData;
+    wire [31:0] sramWriteData;
+    wire [63:0] sramReadData;
     wire sramWrEn, sramRdEn, sramReady;
     Cache_Controller cachectrl(clk, rst, 
         address, data, memWrite, memRead, memResult, ready, 

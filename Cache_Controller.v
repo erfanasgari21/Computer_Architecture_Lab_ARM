@@ -1,6 +1,6 @@
-`define IDLE 1'd0;
-`define READ_HIGH 1'd1;
-
+`define IDLE 2'd0
+`define READ_LOW 2'd1
+`define READ_HIGH 2'd3
 
 module Cache_Controller(
     input clk, rst,
@@ -21,8 +21,8 @@ module Cache_Controller(
 
     // ADDRESS DECODE
     wire word = address[2];
-    wire index = address[8:3];
-    wire tag = address[18:9];
+    wire [5:0] index = address[8:3];
+    wire [9:0] tag = address[18:9];
 
     // CACHE MEMORY
     reg [63:0] dataWay0 [0:63];
@@ -34,41 +34,54 @@ module Cache_Controller(
     reg [0:63] LRU;
 
     // COMBINATIONAL LOGIC
+    initial begin
+        validWay0 = 64'b0;
+        validWay1 = 64'b0;
+        LRU = 64'b0;
+    end
+
     wire hit, hitWay0, hitWay1;
-    assign hitWay0 = (tagWay0[index] == tag) & validWay0;
-    assign hitWay1 = (tagWay1[index] == tag) & validWay1;
-    
+    assign hitWay0 = (tagWay0[index] == tag) & validWay0[index];
+    assign hitWay1 = (tagWay1[index] == tag) & validWay1[index];
     assign hit = hitWay0 | hitWay1;
+    assign ready = ~(wrEn | rdEn) | (wrEn & sramReady) | (rdEn & (hit | sramReady));
 
     wire [63:0] readBlock; 
-    assign readBlock = hitWay0 ? dataWay0[index] : hitWay1 ? dataWay1[index] : sramReadData;
+    assign readBlock = hitWay0 ? (dataWay0[index]) : (hitWay1 ? dataWay1[index] : sramReadData);
     assign readData = word ? readBlock[63:32] : readBlock[31:0] ;
 
     assign sramRdEn = rdEn & ~hit;
     assign sramWrEn = wrEn; 
-    
+    assign sramAddress = address;
     assign sramWriteData = writeData; 
 
-    // STATE MACHINE
-    
-    reg ps, ns;
-    assign ready =  ~(wrEn | rdEn) | hit | (sramReady & (ps == `READ_HIGH | sramWrEn));
-    assign sramAddress = sramWrEn ? address : ps ==`IDLE ? {address >> 3, 3'b000} : {address >> 3, 3'b100};
-    
-    always @(ps, sramRdEn, sramWrEn, sramReady) begin
-        ns = `IDLE;
-        case(ps)
-            `IDLE:      ns = (sramRdEn & sramReady) ? `READ_HIGH : `IDLE;
-            `READ_HIGH: ns = sramReady ? `IDLE : `READ_HIGH;
-        endcase
-    end
-
     always @(posedge clk) begin
-        if(rst)
-            ps <= `IDLE;
-        else
-            ps <= ns;
+        if(rst) begin
+            validWay0 = 64'b0;
+            validWay1 = 64'b0;
+            LRU = 64'b0;
+        end
+        else if(wrEn & hit) begin
+            validWay0[index] <= hitWay0 ? 1'b0 : validWay0[index];
+            validWay1[index] <= hitWay1 ? 1'b0 : validWay1[index];
+        end
+        else if(rdEn & hit) begin
+            LRU[index] <= hitWay0 ? 1'b0 : 1'b1;
+        end
+        else if(rdEn & sramReady & ~hit) begin
+            if(LRU[index]==1'b0) begin
+                dataWay1[index] <= sramReadData;
+                tagWay1[index] <= tag;
+                validWay1[index] <= 1'b1;
+                LRU[index] <= 1'b1;
+            end
+            else begin
+                dataWay0[index] <= sramReadData;
+                tagWay0[index] <= tag;
+                validWay0[index] <= 1'b1;
+                LRU[index] <= 1'b0;
+            end
+        end
     end
-
 
 endmodule
