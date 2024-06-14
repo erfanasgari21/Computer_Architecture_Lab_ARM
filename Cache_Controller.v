@@ -15,7 +15,7 @@ module Cache_Controller(
     output [31:0] sramAddress,
     output [31:0] sramWriteData,
     output sramWrEn, sramRdEn, 
-    input  [63:0] sramReadData,
+    input  [63:0] sramReadData, 
     input  sramReady
 );
 
