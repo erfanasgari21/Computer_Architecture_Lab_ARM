@@ -4,15 +4,6 @@ module Top_Level_TB();
     wire [15:0]sramData;
     wire [17:0]sramAddress;
     wire [4:0]sramCtrl;
-
-    reg clk1;
-
-    initial begin
-        clk1 = 1'b0;
-    end
-    always @(posedge clk) begin
-        clk1 = ~clk1;
-    end
     
     SRAM sram(clk, rst, sramCtrl[4], sramAddress, sramData);
     Top_Level CUT(clk, rst, forwardingEn, sramData, sramAddress, sramCtrl);
