@@ -1,6 +1,6 @@
-# Implementation of ARM968E-S Processor 
+# Implementation of ARM Processor 
 
-This repository contains the implementation of a student project for the Computer Architecture Lab course, supervised by Dr. Safari at the University of Tehran. The project consists of four main parts, each represented by a [release](https://github.com/erfanasgari21/Computer_Architecture_Lab_ARM/releases) in the repository:
+This repository contains the implementation of ARM968E-S for the Computer Architecture Lab course, supervised by Dr. Safari at the University of Tehran. The project consists of four main parts, each represented by a [release](https://github.com/erfanasgari21/Computer_Architecture_Lab_ARM/releases) in the repository:
 
 1. **Basics of ARM**: The initial implementation focusing on the foundational aspects of ARM architecture.
 2. **Forwarding**: Enhancements to the basic ARM model by incorporating data forwarding techniques to resolve data hazards.
@@ -43,3 +43,7 @@ In this final part, we implemented a cache memory system to further enhance the 
 - Cache memory hierarchy
 - Cache read/write operations
 - Performance improvement with caching
+
+## Contributers
+- [Erfan Asgari](https://github.com/erfanasgari21)
+- [Salar Safardoust](https://github.com/salar-sfd)
