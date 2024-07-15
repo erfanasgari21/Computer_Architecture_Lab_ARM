@@ -10,7 +10,7 @@ This repository contains the implementation of a student project for the Compute
 ## Basics of ARM
 In this part, we implemented the foundational aspects of the ARM architecture.
 
-![Basics of ARM](media/ARM.png)
+![Basics of ARM](media/ARM.jpg)
 
 ### Features
 - Basic ARM instruction set
@@ -19,7 +19,7 @@ In this part, we implemented the foundational aspects of the ARM architecture.
 ## Forwarding
 In this part, we enhanced the basic ARM model by incorporating data forwarding techniques to resolve data hazards.
 
-![Forwarding](media/Forwarding.png)
+![Forwarding](media/Forwarding.jpg)
 
 ### Features
 - Implementation of data forwarding to handle data hazards
@@ -28,7 +28,7 @@ In this part, we enhanced the basic ARM model by incorporating data forwarding t
 ## SRAM Integration
 In this part, we added SRAM (Static Random Access Memory) to the existing ARM model.
 
-![SRAM Integration](media/SRAM.png)
+![SRAM Integration](media/SRAM.jpg)
 
 ### Features
 - SRAM integration with the ARM model
@@ -37,7 +37,7 @@ In this part, we added SRAM (Static Random Access Memory) to the existing ARM mo
 ## Cache Implementation
 In this final part, we implemented a cache memory system to further enhance the ARM model.
 
-![Cache Implementation](media/Cache.png)
+![Cache Implementation](media/Cache.jpg)
 
 ### Features
 - Cache memory hierarchy
