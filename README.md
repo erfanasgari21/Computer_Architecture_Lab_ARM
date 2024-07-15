@@ -7,7 +7,7 @@ This repository contains the implementation of a student project for the Compute
 3. **SRAM Integration**: Addition of SRAM (Static Random Access Memory) to the existing ARM model.
 4. **Cache Implementation**: Final part of the project which includes the implementation of a cache memory system.
 
-## Basics of ARM
+## [Basics of ARM](https://github.com/erfanasgari21/Computer_Architecture_Lab_ARM/releases/tag/arm-base)
 In this part, we implemented the foundational aspects of the ARM architecture.
 
 ![Basics of ARM](media/ARM.jpg)
