@@ -1,6 +1,6 @@
 # Implementation of ARM968E-S Processor 
 
-This repository contains the implementation of a student project for the Computer Architecture Lab course, supervised by Dr. Safari at the University of Tehran. The project consists of four main parts, each represented by a tag in the repository:
+This repository contains the implementation of a student project for the Computer Architecture Lab course, supervised by Dr. Safari at the University of Tehran. The project consists of four main parts, each represented by a [release](https://github.com/erfanasgari21/Computer_Architecture_Lab_ARM/releases) in the repository:
 
 1. **Basics of ARM**: The initial implementation focusing on the foundational aspects of ARM architecture.
 2. **Forwarding**: Enhancements to the basic ARM model by incorporating data forwarding techniques to resolve data hazards.
@@ -16,7 +16,7 @@ In this part, we implemented the foundational aspects of the ARM architecture.
 - Basic ARM instruction set
 - Fundamental pipeline stages
 
-## Forwarding
+## [Forwarding](https://github.com/erfanasgari21/Computer_Architecture_Lab_ARM/releases/tag/forwarding-final)
 In this part, we enhanced the basic ARM model by incorporating data forwarding techniques to resolve data hazards.
 
 ![Forwarding](media/Forwarding.jpg)
@@ -25,7 +25,7 @@ In this part, we enhanced the basic ARM model by incorporating data forwarding t
 - Implementation of data forwarding to handle data hazards
 - Improved pipeline efficiency
 
-## SRAM Integration
+## [SRAM Integration](https://github.com/erfanasgari21/Computer_Architecture_Lab_ARM/releases/tag/sram-final)
 In this part, we added SRAM (Static Random Access Memory) to the existing ARM model.
 
 ![SRAM Integration](media/SRAM.jpg)
@@ -34,7 +34,7 @@ In this part, we added SRAM (Static Random Access Memory) to the existing ARM mo
 - SRAM integration with the ARM model
 - Memory read/write operations
 
-## Cache Implementation
+## [Cache Implementation](https://github.com/erfanasgari21/Computer_Architecture_Lab_ARM/releases/tag/cache-final)
 In this final part, we implemented a cache memory system to further enhance the ARM model.
 
 ![Cache Implementation](media/Cache.jpg)
